@@ -110,23 +110,13 @@ public class AgregarDatos extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nombre de catalogo");
 
-        catalogoTxt.setText("jTextField1");
-
         jLabel2.setText("ID producto");
-
-        idTxt.setText("jTextField2");
 
         jLabel3.setText("Nombre del producto");
 
-        nombreTxt.setText("jTextField3");
-
         jLabel4.setText("Descripcion");
 
-        descripcionTxt.setText("jTextField4");
-
         jLabel5.setText("Cantidad");
-
-        cantidadTxt.setText("jTextField5");
 
         agregarBtn.setText("Agregar");
         agregarBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +127,11 @@ public class AgregarDatos extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Precio unitario");
 
-        precioUnitarioTxt.setText("jTextField1");
+        precioUnitarioTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precioUnitarioTxtActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -146,22 +140,22 @@ public class AgregarDatos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(catalogoTxt)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(idTxt)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nombreTxt)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(descripcionTxt)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cantidadTxt))
-                        .addGap(38, 38, 38)
-                        .addComponent(agregarBtn))
                     .addComponent(jLabel6)
-                    .addComponent(precioUnitarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(precioUnitarioTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(catalogoTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(idTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nombreTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(descripcionTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cantidadTxt, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(38, 38, 38)
+                        .addComponent(agregarBtn)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -203,7 +197,12 @@ public class AgregarDatos extends javax.swing.JInternalFrame {
         leerlista();
       llenarLista();
       outProductos();
+      this.setVisible(false);
     }//GEN-LAST:event_agregarBtnActionPerformed
+
+    private void precioUnitarioTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioUnitarioTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_precioUnitarioTxtActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

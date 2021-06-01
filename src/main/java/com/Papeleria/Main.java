@@ -5,40 +5,60 @@
  */
 package com.Papeleria;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.awt.event.ActionEvent;
+import java.io.*;
 import java.util.ArrayList;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
  * @author paulo
  */
 public class Main extends javax.swing.JFrame {
-     DefaultTableModel modelo = new DefaultTableModel();
-       ArrayList<Producto> listaProductos;
-       AgregarDatos aD = new AgregarDatos();
+    DefaultTableModel modelo = new DefaultTableModel();
+    ArrayList<Producto> listaProductos;
+    AgregarDatos aD = new AgregarDatos();
+
+
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
         setModelo();
+        leerlista();
+        setDatos();
     }
-    private void setModelo(){
+
+    private void setModelo() {
         String[] cabecera = {"Id", "Nombre", "Descripcion", "Piezas", "Precio Unitario",};
         modelo.setColumnIdentifiers(cabecera);
         arteTbl.setModel(modelo);
-        
+
     }
-    private void leerlista(){
-        try{
+
+    private void escribirLista() {
+        try {
+            ObjectOutputStream escribiendoFichero = new ObjectOutputStream(
+                    new FileOutputStream("data/Productos.obj"));
+            escribiendoFichero.writeObject(listaProductos);
+            escribiendoFichero.close();
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+        }
+
+    }
+
+    //Aqui recibe lo que tenga el archivo y lo mete a una listaProductos
+    private void leerlista() {
+        try {
             ObjectInputStream leyendoFichero = new ObjectInputStream(
-                    new FileInputStream("data/Productos.obj") );
+                    new FileInputStream("data/Productos.obj"));
 //            Producto objProductoLeido = (Producto) objInput.readObject();
-            listaProductos = (ArrayList <Producto>) leyendoFichero.readObject();
+            listaProductos = (ArrayList<Producto>) leyendoFichero.readObject();
             leyendoFichero.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -48,10 +68,12 @@ public class Main extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    private void setDatos(){
+
+    //vaciamos los datos de la lista en la tabla
+    private void setDatos() {
         Object[] datos = new Object[modelo.getColumnCount()];
         modelo.setRowCount(0);
-        for(Producto theprod:listaProductos){
+        for (Producto theprod : listaProductos) {
             datos[0] = theprod.getIdProducto();
             datos[1] = theprod.getNombreDelProducto();
             datos[2] = theprod.getDescripcion();
@@ -62,7 +84,7 @@ public class Main extends javax.swing.JFrame {
         arteTbl.setModel(modelo);
 
     }
-    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,6 +102,7 @@ public class Main extends javax.swing.JFrame {
         agregarBtn = new javax.swing.JButton();
         agregarDatosPanel = new javax.swing.JPanel();
         verProductosBtn = new javax.swing.JButton();
+        eliminarProductoBtn = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         arteBtn = new javax.swing.JMenuItem();
@@ -94,12 +117,12 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         arteTbl.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
+                },
+                new String[]{
 
-            }
+                }
         ));
         jScrollPane1.setViewportView(arteTbl);
 
@@ -113,12 +136,12 @@ public class Main extends javax.swing.JFrame {
         javax.swing.GroupLayout agregarDatosPanelLayout = new javax.swing.GroupLayout(agregarDatosPanel);
         agregarDatosPanel.setLayout(agregarDatosPanelLayout);
         agregarDatosPanelLayout.setHorizontalGroup(
-            agregarDatosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 477, Short.MAX_VALUE)
+                agregarDatosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 477, Short.MAX_VALUE)
         );
         agregarDatosPanelLayout.setVerticalGroup(
-            agregarDatosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+                agregarDatosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE)
         );
 
         verProductosBtn.setText("Ver Productos");
@@ -128,36 +151,45 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        eliminarProductoBtn.setText("Eliminar un producto");
+        eliminarProductoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarProductoBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout artePanelLayout = new javax.swing.GroupLayout(artePanel);
         artePanel.setLayout(artePanelLayout);
         artePanelLayout.setHorizontalGroup(
-            artePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(artePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(agregarDatosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(artePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(artePanelLayout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(verProductosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(agregarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                artePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(artePanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(agregarDatosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(artePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, artePanelLayout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(eliminarProductoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(verProductosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(agregarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(16, Short.MAX_VALUE))
         );
         artePanelLayout.setVerticalGroup(
-            artePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(artePanelLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(artePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(agregarDatosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(artePanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(68, 68, 68)
-                        .addGroup(artePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(agregarBtn)
-                            .addComponent(verProductosBtn))))
-                .addContainerGap(83, Short.MAX_VALUE))
+                artePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(artePanelLayout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addGroup(artePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(agregarDatosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(artePanelLayout.createSequentialGroup()
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(68, 68, 68)
+                                                .addGroup(artePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(agregarBtn)
+                                                        .addComponent(verProductosBtn)
+                                                        .addComponent(eliminarProductoBtn))))
+                                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Catalogos");
@@ -197,12 +229,12 @@ public class Main extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(artePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(artePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(artePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(artePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -218,10 +250,10 @@ public class Main extends javax.swing.JFrame {
 
     private void agregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarBtnActionPerformed
         // TODO add your handling code here:
-        
+
         agregarDatosPanel.add(aD);
         aD.show();
-           
+
     }//GEN-LAST:event_agregarBtnActionPerformed
 
     private void verProductosBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verProductosBtnActionPerformed
@@ -232,6 +264,21 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_verProductosBtnActionPerformed
 
+    private void eliminarProductoBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_eliminarProductoBtnActionPerformed
+        // TODO add your handling code here:
+
+        if (arteTbl.getSelectedRow() == -1)
+            return;
+
+        //eliminamos la fila seleccionada de la lista
+
+        listaProductos.remove(arteTbl.getSelectedRow());
+        modelo.removeRow(arteTbl.getSelectedRow());
+        System.out.println(listaProductos.toString());
+        escribirLista();
+
+    }//GEN-LAST:event_eliminarProductoBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -239,7 +286,7 @@ public class Main extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -267,12 +314,17 @@ public class Main extends javax.swing.JFrame {
         });
     }
 
+    public JTable getArteTbl() {
+        return arteTbl;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarBtn;
     private javax.swing.JPanel agregarDatosPanel;
     private javax.swing.JMenuItem arteBtn;
     private javax.swing.JPanel artePanel;
     private javax.swing.JTable arteTbl;
+    private javax.swing.JButton eliminarProductoBtn;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
