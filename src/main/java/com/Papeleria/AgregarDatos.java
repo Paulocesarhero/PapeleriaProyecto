@@ -9,54 +9,107 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- *
  * @author paulo
  */
 public class AgregarDatos extends javax.swing.JInternalFrame {
     ArrayList<Producto> listaProductos = new ArrayList<Producto>();
+    int definiendoConstructor;
+    int colSeleccionada;
 
     /**
      * Creates new form AgregarDetos
      */
     public AgregarDatos() {
+        definiendoConstructor = 1;
         initComponents();
     }
-    public String getStringIdTxt(){
+
+    //constructor para eliminar datos
+    public AgregarDatos(int indiceDelaColumnaSeleccionada) {
+        colSeleccionada = indiceDelaColumnaSeleccionada;
+        definiendoConstructor = 0;
+//        this.setVisible(true);
+        initComponents();
+
+//        String catalogo = listaProductos.get(indiceDelaColumnaSeleccionada).getNombreDelCatalogo();
+//        String id = listaProductos.get(indiceDelaColumnaSeleccionada).getIdProducto();
+//        String nombreDelProducto = listaProductos.get(indiceDelaColumnaSeleccionada).getNombreDelProducto();
+//        String descripcioncion = listaProductos.get(indiceDelaColumnaSeleccionada).getDescripcion();
+//        int cantidad = listaProductos.get(indiceDelaColumnaSeleccionada).getCantidad();
+//        double precioUnitarionitario = listaProductos.get(indiceDelaColumnaSeleccionada).getPrecioUnitario();
+        //vaciamos el indice seleccionado en el formulario
+//        this.repaint();
+//        this.setResizable(true);
+
+//        catalogoTxt.setText("Artes");
+//        idTxt.setText(id);
+//        nombreTxt.setText(nombreDelProducto);
+//        descripcionTxt.setText(descripcioncion);
+//        cantidadTxt.setText(String.valueOf(cantidad));
+//        precioUnitarioTxt.setText(String.valueOf(precioUnitarionitario));
+
+
+
+    }
+
+    public String getStringIdTxt() {
         return idTxt.getText();
     }
-    public String getStringNombreDeCatalogo(){
+
+    public String getStringNombreDeCatalogo() {
         return catalogoTxt.getText();
     }
-    public String getStringNombreProducto(){
+
+    public String getStringNombreProducto() {
         return nombreTxt.getText();
     }
-    public String getStringDescripcion(){
+
+    public String getStringDescripcion() {
         return descripcionTxt.getText();
     }
-    public int getIntCantidad(){
+
+    public int getIntCantidad() {
         return Integer.parseInt(cantidadTxt.getText());
     }
-    public double getDoublePrecioUnitario(){
+
+    public double getDoublePrecioUnitario() {
         return Double.parseDouble(precioUnitarioTxt.getText());
     }
-    //Lennar lista para el array list
-    private void llenarLista(){
+
+    //Lee lo que escribio el usuario y los introduce a la lista
+    private void llenarLista() {
         String catalogo = getStringNombreDeCatalogo();
         String id = getStringIdTxt();
         String nombreDelProducto = getStringNombreProducto();
         String descripcion = getStringDescripcion();
         int cantidad = getIntCantidad();
         double precioUnitario = getDoublePrecioUnitario();
-        Producto product  = new Producto(catalogo,nombreDelProducto,id,descripcion,cantidad,precioUnitario);
+        Producto product = new Producto(catalogo, nombreDelProducto, id, descripcion, cantidad, precioUnitario);
         listaProductos.add(product);
+        System.out.println("Entre al indice incorrecto");
     }
-    //agrgar los objetos que existe en el objeto
-    private void leerlista(){
-        try{
+
+    private void llenarLista(int indiceDeLaLista) {
+
+        String catalogo = getStringNombreDeCatalogo();
+        String id = getStringIdTxt();
+        String nombreDelProducto = getStringNombreProducto();
+        String descripcion = getStringDescripcion();
+        int cantidad = getIntCantidad();
+        double precioUnitario = getDoublePrecioUnitario();
+        Producto product = new Producto(catalogo, nombreDelProducto, id, descripcion, cantidad, precioUnitario);
+        listaProductos.set(indiceDeLaLista, product);
+
+
+    }
+
+    //Aqui recibe lo que tenga el archivo y lo mete a una listaProductos
+    private void leerlista() {
+        try {
             ObjectInputStream leyendoFichero = new ObjectInputStream(
-                    new FileInputStream("data/Productos.obj") );
+                    new FileInputStream("data/Productos.obj"));
 //            Producto objProductoLeido = (Producto) objInput.readObject();
-            listaProductos = (ArrayList <Producto>) leyendoFichero.readObject();
+            listaProductos = (ArrayList<Producto>) leyendoFichero.readObject();
             leyendoFichero.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -66,22 +119,23 @@ public class AgregarDatos extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
     }
-    private void outProductos(){
-        try{
+
+    //escribe el fichero con los datos que estan en la lista
+    private void outProductos() {
+        try {
             ObjectOutputStream escribiendoFichero = new ObjectOutputStream(
-                    new FileOutputStream("data/Productos.obj") );
+                    new FileOutputStream("data/Productos.obj"));
             escribiendoFichero.writeObject(listaProductos);
             escribiendoFichero.close();
 
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            
+
         }
-    
-}
-    
-    
+
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -136,68 +190,76 @@ public class AgregarDatos extends javax.swing.JInternalFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(precioUnitarioTxt, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(catalogoTxt, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(idTxt, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nombreTxt, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(descripcionTxt, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cantidadTxt, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(38, 38, 38)
-                        .addComponent(agregarBtn)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel6)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(precioUnitarioTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(catalogoTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(idTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(nombreTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(descripcionTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(cantidadTxt, javax.swing.GroupLayout.Alignment.LEADING))
+                                                .addGap(38, 38, 38)
+                                                .addComponent(agregarBtn)))
+                                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(catalogoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(agregarBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(idTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nombreTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(descripcionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cantidadTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(precioUnitarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(catalogoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(agregarBtn))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(idTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nombreTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(descripcionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cantidadTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(precioUnitarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void agregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarBtnActionPerformed
-        leerlista();
-      llenarLista();
-      outProductos();
-      this.setVisible(false);
+        if (definiendoConstructor == 0) {
+            System.out.println("Entre a este if");
+            leerlista();
+            llenarLista(colSeleccionada);
+            outProductos();
+        } else {
+            System.out.println("Entre al otro if");
+            leerlista();
+            llenarLista();
+            outProductos();
+        }
+//      this.setVisible(false);
     }//GEN-LAST:event_agregarBtnActionPerformed
 
     private void precioUnitarioTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioUnitarioTxtActionPerformed
